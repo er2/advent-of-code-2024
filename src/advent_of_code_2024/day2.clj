@@ -24,10 +24,9 @@
   (let [pairs (adj-pairs reports)]
     (->> pairs
          (map safe-gap)
-         (every? true?)
-         )))
+         (every? true?))))
 
-(defn safe? [report]
+(defn safe?-pt1 [report]
   (and
     (safe-gaps report)
     (monotonic? report)))
@@ -35,11 +34,27 @@
 (def reports
   (map line-to-vec (readlines)))
 
-(defn count-safe-reports [reports]
-  "Part 1"
+(defn count-safe-reports [safe-fn reports]
   (->> reports
-       (filter safe?)
+       (filter safe-fn)
        (count)))
+
+(defn count-safe-reports-1 [reports]
+  (count-safe-reports safe?-pt1 reports))
+
+(defn remove-at [v i]
+  (let [v (vec v)]
+    (into (subvec v 0 i) (subvec v (inc i)))))
+
+(defn safe?-pt2 [reports]
+  (let [indices (range (count reports))
+        remove (partial remove-at reports)
+        with-removals (map remove indices)
+        report-permutations (conj with-removals reports)]
+    (some safe?-pt1 report-permutations)))
+
+(defn count-safe-reports-2 [reports]
+  (count-safe-reports safe?-pt2 reports))
 
 (comment
   (readlines)
@@ -54,6 +69,8 @@
   (monotonic? [1 2 1])
   (map line-to-vec (readlines))
   reports
-  (count-safe-reports reports)
+  (count-safe-reports-1 reports)
+  (count-safe-reports-2 reports)
   (safe-gaps [7 6 4 2 1])
+  (remove-at [1 2 3 4] (last (range (count [1 2 3 4]))))
   (adj-pairs [7 6 4 2 1]))
