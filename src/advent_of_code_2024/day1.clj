@@ -26,6 +26,7 @@
   (abs (- l r)))
 
 (defn calc-total-distance []
+  "Part 1"
   (->> (readlines)
       (to-pairs)
       (sort-lists)
@@ -35,10 +36,12 @@
 
 (defn proc-similarity [[ns occurences]]
   (let [freqs (frequencies occurences)
-        calc (fn [n] (* n (freqs n 0)))]
+        calc (fn [n]
+               (* n (freqs n 0)))]
     (map calc ns)))
 
 (defn calc-similarity []
+  "Part 2"
   (->> (readlines)
        (to-pairs)
        (unzip)
