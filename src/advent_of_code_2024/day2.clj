@@ -18,13 +18,13 @@
 
 (defn safe-gap [[l r]]
   (let [diff (abs (- l r))]
-    (apply <= [1 diff 3])))
+    (<= 1 diff 3)))
 
 (defn safe-gaps [reports]
-  (let [pairs (adj-pairs reports)]
-    (->> pairs
-         (map safe-gap)
-         (every? true?))))
+  (->> reports
+       (adj-pairs)
+       (map safe-gap)
+       (every? true?)))
 
 (defn safe?-pt1 [report]
   (and
