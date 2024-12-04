@@ -41,8 +41,9 @@
     (let [[head & rest] instructions
           enabled (new-enabled head enabled)]
       (if (not enabled)
-        (proc-instructions rest running-total enabled)
-        (proc-instructions rest (+ (parse-muls head) running-total) enabled)))))
+        (recur rest running-total enabled)
+        (let [running-total (+ (parse-muls head) running-total)]
+          (recur rest running-total enabled))))))
 
 (defn part2 []
   (-> lines
