@@ -8,8 +8,7 @@
   (for [y (range (count ls))
         x (range (.length (first ls)))
         :let [l (get (get ls y) x)]
-        :when (= l \X)
-        ]
+        :when (= l \X)]
     [x y]))
 
 (defn to-map [l]
@@ -78,3 +77,27 @@
   (find-xs ["X" "Y"])
   (to-map lines))
 
+
+(defn find-as [lines]
+  (for [y (range (count lines))
+        x (range (.length (first lines)))
+        :let [l (get (get lines y) x)]
+        :when (= l \A)]
+    [x y]))
+
+(defn cross-coords [[x y]]
+  [[(inc x) (inc y)]
+   [(inc x) (dec y)]
+   [(dec x) (dec y)]
+   [(dec x) (inc y)]])
+
+(defn get-cross [lines [x y]]
+
+  )
+
+(defn part2 []
+  )
+
+(comment
+  (part2)
+  )
