@@ -96,9 +96,10 @@
 (defn patrol [m]
   (let [{reason :reason
          moves  :moves} (walk-forward m)
+        l (prn m)
         new-orientation (rotate (:dir (:guard m)))
         walked-off-edge (= reason :off-map)
-        new-trod (conj (:trod map) moves)
+        new-trod (into (set (:trod map)) (map :coord moves))
         new-pos (:coord (last moves))
         new-map (assoc m :trod new-trod :guard {:loc new-pos :dir new-orientation})]
     (if walked-off-edge
@@ -110,7 +111,8 @@
       (parse-map)
       (patrol)
       (:trod)
-      (count)))
+      (count)
+      ))
 
 (defn -main []
   (prn (part1)))
