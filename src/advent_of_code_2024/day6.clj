@@ -43,11 +43,10 @@
 (defn in-map [map]
   (let [{max-x :max-x
          max-y :max-y} map]
-    (fn [c]
-      (let [[x y] c]
+    (fn [[x y]]
         (and
           (< -1 x max-x)
-          (< -1 y max-y))))))
+          (< -1 y max-y)))))
 
 (defn one-more
   "takes a function and a collection.
