@@ -54,9 +54,8 @@
   returns a new collection based on the original
   plus a new element from the function applied to the previous last element"
   [last-fn coll]
-  (if (empty? coll) []
-                    (let [new-last-elem (last-fn (last coll))]
-                      (conj (vec coll) new-last-elem))))
+  (let [new-last-elem (last-fn (last coll))]
+    (conj (vec coll) new-last-elem)))
 
 (defn why [last]
   (if (:unobstructed last)
@@ -92,7 +91,7 @@
          moves  :moves} (walk-forward m)
         new-orientation (rotate (:dir (:guard m)))
         walked-off-edge (= reason :off-map)
-        new-trod (into (set (:trod m)) (map :coord moves))
+        new-trod (into (:trod m) (map :coord moves))
         new-pos (:coord (first moves))
         new-map (assoc m :trod new-trod :guard {:loc new-pos :dir new-orientation})]
     (if walked-off-edge
@@ -104,7 +103,7 @@
       (parse-map)
       (patrol)
       (:trod)
-      (count)      ))
+      (count)))
 
 (defn -main []
   (prn (part1)))
