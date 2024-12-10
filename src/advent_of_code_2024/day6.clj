@@ -40,13 +40,11 @@
    \v \<
    \< \^})
 
-(defn in-map [map]
-  (let [{max-x :max-x
-         max-y :max-y} map]
-    (fn [[x y]]
-        (and
-          (< -1 x max-x)
-          (< -1 y max-y)))))
+(defn in-map [{:keys [max-x max-y]}]
+  (fn [[x y]]
+    (and
+      (< -1 x max-x)
+      (< -1 y max-y))))
 
 (defn one-more
   "takes a function and a collection.
