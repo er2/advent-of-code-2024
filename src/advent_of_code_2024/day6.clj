@@ -88,7 +88,6 @@
       (iterate forward loc)
       (map detailed)
       (take-while (every-pred :in-map :unobstructed))
-      (vec)
       (one-more next)
       (explain-ending)
       )))
@@ -99,8 +98,8 @@
         l (prn m)
         new-orientation (rotate (:dir (:guard m)))
         walked-off-edge (= reason :off-map)
-        new-trod (into (set (:trod map)) (map :coord moves))
-        new-pos (:coord (last moves))
+        new-trod (into (set (:trod m)) (map :coord moves))
+        new-pos (:coord (first moves))
         new-map (assoc m :trod new-trod :guard {:loc new-pos :dir new-orientation})]
     (if walked-off-edge
       new-map
