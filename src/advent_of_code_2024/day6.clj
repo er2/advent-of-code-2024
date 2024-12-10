@@ -68,10 +68,6 @@
     {:reason reason
      :moves  (reverse (drop-last 1 moves))}))
 
-(defn my-print [e]
-  (prn e)
-  e)
-
 (defn walk-forward [m]
   (let [{guard     :guard
          obstacles :obstacles} m
@@ -89,13 +85,11 @@
       (map detailed)
       (take-while (every-pred :in-map :unobstructed))
       (one-more next)
-      (explain-ending)
-      )))
+      (explain-ending))))
 
 (defn patrol [m]
   (let [{reason :reason
          moves  :moves} (walk-forward m)
-        l (prn m)
         new-orientation (rotate (:dir (:guard m)))
         walked-off-edge (= reason :off-map)
         new-trod (into (set (:trod m)) (map :coord moves))
@@ -110,8 +104,7 @@
       (parse-map)
       (patrol)
       (:trod)
-      (count)
-      ))
+      (count)      ))
 
 (defn -main []
   (prn (part1)))
@@ -120,7 +113,6 @@
   (readlines)
   (range 10)
   (part1)
-  ;({:foo {:bar 4}} :foo)
   (take 5 (iterate (forward \>) [0 0]))
   (parse-obstacles (readlines))
   (parse-guard (readlines))
@@ -128,7 +120,6 @@
   (patrol (parse-map (readlines)))
   ((in-map (parse-map (readlines))) [0 0])
   (walk-forward (parse-map (readlines)))
-  ;(post-pend inc (lazy-seq ))
   (explain-ending [{:in-map false :unobstructed true :coord [1 1]}])
   (explain-ending [{} {} {:in-map true :unobstructed false :coord [1 1]}])
   (take 5 (walk-forward (parse-map (readlines)))))
